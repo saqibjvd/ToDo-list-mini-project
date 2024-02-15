@@ -6,22 +6,24 @@ import Todo from './todo'
 export default function TodoList() {
   const [todos, setTodos] = useState([
     { task: "learn React", completed: false },
-    { task: "learn Next.js", completed: false },
+    { task: "learn Next.js", completed: true },
   ]);
+  const setCompleted = (index) => {
+    todos[index].completed = !todos[index].completed;
+    setTodos([...todos]);
+  }
+
   return (
     <ol>
-      <p>JSX style:</p>
-      {
-        todos.map((todo) => <Todo todo={todo}/>)
-      }
       <p>Function style:</p>
       {
-        todos.map((todo) => Todo({todo: todo}))
+        todos.map((todo, index) => Todo(
+          {
+            todo: todo,
+            onClick: () => setCompleted(index),
+          }
+        ))
       }
-      {/* <p>No Props style:</p>
-      {
-        todos.map((todo) => Todo(todo))
-      } */}
     </ol>
   );
 }

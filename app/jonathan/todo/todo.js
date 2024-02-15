@@ -1,21 +1,9 @@
 
 // destructured props style
-export default function Todo({todo}) {
+export default function Todo({todo, onClick}) {
   return (
-    <li>{todo.task}</li>
+    <li onClick={onClick}>
+      {todo.task} {todo.completed ? "☑" : "☐"}
+    </li>
   );
 }
-
-// // not destructured props style:
-// export default function Todo(props) {
-//   return (
-//     <li>{props.todo.task}</li>
-//   );
-// }
-
-// // No Props style:
-// export default function Todo(todo) {
-//   return (
-//     <li>{todo.task}</li>
-//   );
-// }
