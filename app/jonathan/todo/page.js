@@ -17,11 +17,12 @@ export default function TodoList() {
     <ol>
       <p>Function style:</p>
       {
-        todos.map((todo, index) => <Todo
-          key={index}
-          todo={todo}
-          onClick={() => setCompleted(index)}
-        />)
+        todos.map((todo, index) => Todo(
+          {
+            todo: todo,
+            onClick: () => setCompleted(index),
+          }
+        ))
       }
     </ol>
   );
