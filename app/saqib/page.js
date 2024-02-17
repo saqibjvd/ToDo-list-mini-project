@@ -9,24 +9,23 @@ export default function TodoApp() {
     { id: 3, task: "Done the shopping", completed: true },
   ]);
 
-  const [taskText, settaskText] = useState(""); // adding new todo to the list
+  const [newTask, setNewTask] = useState(" ");
 
-  // add new todo to  list
   function addTask(e) {
     e.preventDefault();
-    const newTask = {
+    const newTodo = {
       id: todos[todos.length - 1].id + 1,
-      task: taskText,
+      task: newTask,
       completed: false,
     };
-    setTodos([...todos, newTask]);
+    setTodos([...todos, newTodo]);
   }
 
   return (
     <div>
       <div className="container">
         <div>
-          <h1>To-do List ✏️</h1>
+          <h1 className="header">To-do List ✏️</h1>
         </div>
         <div className="form-body">
           <form id="todo-form" onSubmit={addTask}>
@@ -34,7 +33,7 @@ export default function TodoApp() {
               type="text"
               id="new-todo"
               // value={newTask}
-              onChange={(e) => settaskText(e.target.value)}
+              onChange={(e) => setNewTask(e.target.value)}
               placeholder="New Task..."
             />
 
@@ -54,11 +53,13 @@ export default function TodoApp() {
             {/* display todo task */}
             {/* {todos && todos.length ? "" : "No task.."} */}
             {todos.map((todo) => (
-                <li className={todo.completed ? 'line-through' : ''} key={todo.id}>
-                  {todo.task}
-                </li>
-              )
-            )}
+              <li
+                className={todo.completed ? "line-through" : ""}
+                key={todo.id}
+              >
+                {todo.task}
+              </li>
+            ))}
           </ul>
         </div>
       </div>
