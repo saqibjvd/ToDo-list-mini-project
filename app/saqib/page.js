@@ -1,31 +1,26 @@
 "use client";
-import Image from "next/image";
+
 import React, { useState } from "react";
 
-const todos = [
-  { task: "Study js", completed: false },
-  { task: "complete todo list react", completed: false },
-  { task: "Done the shopping", completed: true },
-];
-
-// Add Task button function
-function add(e) {
-}
-
-// Delete task button function
-function deleteTask(id) {}
-
-// Delete all task button function
-function deleteAllTask() {}
-
-// mark task as completed function
-// function markTodo(index) {
-//   todos[index].completed = !todos[index].completed;
-//    displayToDoList();
-// }
-
 export default function TodoApp() {
-  const [newTask, setNewTask] = useState("");
+  const [todos, setTodos] = useState([
+    { id: 1, task: "Study js", completed: false },
+    { id: 2, task: "complete todo list react", completed: false },
+    { id: 3, task: "Done the shopping", completed: true },
+  ]);
+
+  const [taskText, settaskText] = useState(""); // adding new todo to the list
+
+  // add new todo to  list
+  function addTask(e) {
+    e.preventDefault();
+    const newTask = {
+      id: todos[todos.length - 1].id + 1,
+      task: taskText,
+      completed: false,
+    };
+    setTodos([...todos, newTask]);
+  }
 
   return (
     <div>
@@ -34,12 +29,12 @@ export default function TodoApp() {
           <h1>To-do List ✏️</h1>
         </div>
         <div className="form-body">
-          <form id="todo-form" onSubmit={add}>
+          <form id="todo-form" onSubmit={addTask}>
             <input
               type="text"
               id="new-todo"
               // value={newTask}
-              onChange={(e) => console.log(e.target.value)}
+              onChange={(e) => settaskText(e.target.value)}
               placeholder="New Task..."
             />
 
@@ -57,13 +52,13 @@ export default function TodoApp() {
         <div>
           <ul className="todo-list">
             {/* display todo task */}
-            {todos && todos.length ? "" : "No task.."}
-            {todos &&
-              todos.map((todo) => (
-                <li className="todo-li" key={todo.task}>
+            {/* {todos && todos.length ? "" : "No task.."} */}
+            {todos.map((todo) => (
+                <li className={todo.completed ? 'line-through' : ''} key={todo.id}>
                   {todo.task}
                 </li>
-              ))}
+              )
+            )}
           </ul>
         </div>
       </div>
