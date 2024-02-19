@@ -5,22 +5,22 @@ import Todo from './todo'
 
 export default function TodoList() {
   const [todos, setTodos] = useState([
-    { task: "learn React", completed: false },
-    { task: "learn Next.js", completed: true },
+    { id: 1, task: "learn React", completed: false },
+    { id: 2, task: "learn Next.js", completed: true },
   ]);
-  const setCompleted = (index) => {
-    todos[index].completed = !todos[index].completed;
+  const clickHandler = (todo) => {
+    todo.completed = !todo.completed;
     setTodos([...todos]);
   }
 
   return (
-    <ol>
+    <ol className="md:text-left lg:text-center">
       <p>Function style:</p>
       {
-        todos.map((todo, index) => <Todo
-          key={index}
+        todos.map((todo) => <Todo
+          key={todo.id}
           todo={todo}
-          onClick={() => setCompleted(index)}
+          clickHandler={clickHandler}
         />)
       }
     </ol>
