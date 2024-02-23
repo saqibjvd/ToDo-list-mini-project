@@ -3,14 +3,15 @@
 import React, { useState } from "react";
 
 export default function TodoApp() {
+  const [newTask, setNewTask] = useState(" "); // for new todo task from input
+
   const [todos, setTodos] = useState([
     { id: 1, task: "Study js", completed: false },
     { id: 2, task: "complete todo list react", completed: false },
-    { id: 3, task: "Done the shopping", completed: true },
+    { id: 3, task: "Done the shopping", completed: false },
   ]);
 
-  const [newTask, setNewTask] = useState(" ");
-
+  // this function will add new task to the list
   function addTask(e) {
     e.preventDefault();
     const newTodo = {
@@ -19,7 +20,18 @@ export default function TodoApp() {
       completed: false,
     };
     setTodos([...todos, newTodo]);
+    setNewTask(" "); // not working...this should clear input field
   }
+
+  // to delete individual todo
+  const deleteItem = (id) => {
+    setTodos(todos.filter((todos) => todos.id !== id));
+  };
+
+  // delete all items from list
+  const deleteAllItems = (todo) => {
+    setTodos([]);
+  };
 
   return (
     <div>
@@ -27,42 +39,43 @@ export default function TodoApp() {
         <div>
           <h1 className="header">To-do List ✏️</h1>
         </div>
+        {/* form */}
         <div className="form-body">
-          <form id="todo-form" onSubmit={addTask}>
+          <form onSubmit={addTask}>
             <input
               type="text"
-              id="new-todo"
-              // value={newTask}
+              value={newTask}
               onChange={(e) => setNewTask(e.target.value)}
-              placeholder="New Task..."
+              placeholder="Add task"
             />
-
-            <button type="submit" id="submit-new" className="button1">
+            <button type="submit" className="add">
               Add
             </button>
           </form>
         </div>
+
         {/* Delete all task */}
         <div className="delete-all">
-          <button type="button" id="delete-completed" className="button2">
-            Delete all
-          </button>
+          <button onClick={() => deleteAllItems(todos)}>Delete all</button>
         </div>
-        <div>
-          <ul className="todo-list">
-            {/* display todo task */}
-            {/* {todos && todos.length ? "" : "No task.."} */}
-            {todos.map((todo) => (
-              <li
-                className={todo.completed ? "line-through" : ""}
-                key={todo.id}
-              >
-                {todo.task}
-              </li>
-            ))}
-          </ul>
-        </div>
+
+        {/* display todo list */}
+        {todos.map((todo, index) => {
+          return (
+            <li className={todo.completed ? "line-through" : ""} key={todo.id}>
+              {todo.task}
+              <button onClick={() => deleteItem(todo.id)}>Delete</button>
+            </li>
+          );
+        })}
+
+        <div></div>
       </div>
     </div>
   );
 }
+
+// click on task to mark as completed
+// delete single task
+// delete all completed task
+// add css tailwind
