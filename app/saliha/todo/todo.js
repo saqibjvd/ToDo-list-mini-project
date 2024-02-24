@@ -1,36 +1,27 @@
-"use client"
-
-import React, {useState} from "react";
+import React from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { FiEdit } from "react-icons/fi";
-import Button from '@mui/material/Button';
+import EditTaskForm from './editTask'
 
-export default function Todo({ todo, onToggle, onDelete, handleClickOpen}) {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  const [editedTask, setEditedTask] = useState("");
-  const [task, setTask] = useState("");
+export default function Todo({ todo, clickHandler, onDelete, onUpdate}) {
 
   return (
-    <tr>
+    <tr key={todo.id}>
+
       {/* toggle */}
-      <td className="td" 
-      onClick={onToggle}>
-        {/* {todo.task} {todo.completed ? "☑" : "☐"} */}
+      <td className="td" size={15}
+      onClick={() => clickHandler(todo)}>
+        {todo.completed ? "☑" : "☐"}
         <span className={`${todo.completed ? "line-through" : ""}`}>
           {todo.task}
         </span>
       </td>
 
+      {/* edit task */}
       <td className="td">
-      <Button onClick={handleOpen}
-      className="btn text-red-800">
-        <FiEdit />
-      </Button>
+      <EditTaskForm taskId={todo.id} onUpdate={onUpdate} />
       </td>
 
-      {/* delete button */}
+      {/* delete one task */}
       <td className="td">
         <button 
         className="btn text-red-800"

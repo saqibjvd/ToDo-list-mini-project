@@ -1,9 +1,10 @@
 
 "use client"
 
-import { FaPlus } from "react-icons/fa6";
 import React, { useState } from 'react';
 import Todo from './todo';
+import { FaPlus } from "react-icons/fa";
+
 
 export default function TodoList() {
   const [todos, setTodos] = useState([
@@ -14,29 +15,50 @@ export default function TodoList() {
   ]);
   const [task, setTask] = useState("");
 
-  const setCompleted = (index) => {
-    const updatedTodos = [...todos];
-    updatedTodos[index].completed = !updatedTodos[index].completed;
-    setTodos(updatedTodos);
-  };
+  const clickHandler = (todo) => {
+    todo.completed = !todo.completed;
+    setTodos([...todos]);
+  }
 
-  const addNewTask = () => {
+  const addNewTask = (e) => {
+    e.preventDefault();
     if (task.trim() !== "") {
-      setTodos([...todos, { task: task, completed: false }]);
+      const newTask = {
+        // id: todos[todos.length - 1].id + 1,
+        id: todos.length + 1,
+        task: task,
+        completed: false
+      };
+      setTodos([...todos, newTask]);
       setTask("");
     }
-  }; 
-
-  const deleteTask = (completed) => {
-    setTodos(todos.filter((todo) => todo.task !== completed));
   };
+  
+  const updateTask = (taskId, updatedTask) => {
+    setTodos(todos.map(todo => {
+      if (todo.id === taskId) {
+        return { ...todo, task: updatedTask };
+      }
+      return todo;
+    }));
+  };
+
+  const deleteTask = (taskId) => {
+    setTodos(todos.filter((todo) => todo.id !== taskId));
+  };
+
+  const deleteAllCompletedTasks = (completed) => {
+    const uncompletedTasks = todos.filter(todo => !todo.completed)
+    setTodos(uncompletedTasks);
+  }
+  
 
   return (
     <main className="max-w-4xl mx-auto mt-20 mb-15">
-    <ol>
     <div>
       <h1 className="underline text-4xl text-center font-b mb-6">Todo App</h1>
     </div>
+
       <div  className="overflow-x-auto text-red">
         <button className="btn size={15} text-purple-900 bg-cyan-500 hover:bg-cyan-600 w-full" onClick={()=>document.getElementById('addTaskModal').showModal()}>
           Add Task
@@ -70,20 +92,28 @@ export default function TodoList() {
         </thead>
         
         <tbody>
-          {todos.map((todo, index) => (
+          {todos.map((todo) => (   
             <Todo
-              key={index}
+              key={todo.id}
+              id={todo.id}
               todo={todo}
-              onToggle={() => setCompleted(index)}
-              onDelete={() => deleteTask(todo.task)}
-              onClick={() => updateTask(todo.task)}
+              clickHandler={clickHandler}
+              onDelete={() => deleteTask(todo.id)}
+              onUpdate={updateTask}
             />
           ))}
         </tbody>
-
       </table>
     </div>
-    </ol>
+    
+      {/* delete all completed tasks */}
+      <button 
+        className="btn size={15} text-purple-900 bg-cyan-500 hover:bg-red-600 w-full"
+        onClick={() => deleteAllCompletedTasks()}
+      >
+        Delete Completed Tasks
+      </button>
+      
     </main>
   );
 }

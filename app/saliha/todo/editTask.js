@@ -4,66 +4,46 @@
 import React, {useState} from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import contactImage from '../Images/My Photo.jpg'
 import { FiEdit } from "react-icons/fi";
 
+export default function EditTaskForm({taskId, onUpdate}) {
+  const [open, setOpen] = useState(false);
+  const [updatedTask, setUpdatedTask] = useState('');
 
-// const style = {
-//   position: 'absolute',
-//   top: '50%',
-//   left: '50%',
-//   transform: 'translate(-50%, -50%)',
-//   width: 400,
-//   bgcolor: 'background.paper',
-//   border: '2px solid #000',
-//   boxShadow: 24,
-//   p: 4,
-// };
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
-
-export default function EditTaskForm() {
- const [open, setOpen] = useState(false);
- const handleOpen = () => setOpen(true);
- const handleClose = () => setOpen(false);
- const [task, setTask] = useState("");
-
-
-   const updateTask = (e) => {
-   e.preventDefault();
-   if (task.trim() !== "") {
-     setEditedTask((prevTodos) =>{
-       return prevTodos.map(todo => {
-         if(todo.task === editedTask) {
-           return {...todo, task: task}
-         }
-         return todo
-       })
-     }) 
-   }
-   setTask("");
- };
+  const handleUpdate = () => {
+    onUpdate(taskId, updatedTask);
+    handleClose();
+  }
 
  return (
    <div>
+      <Button onClick={handleOpen}
+      className="btn text-red-800">
+        <FiEdit />
+      </Button>
      <Modal
        open={open}
        onClose={handleClose}
        aria-labelledby="modal-modal-title"
        aria-describedby="modal-modal-description"
      >
-       <Box sx={style}>
-              <label for="">Edit the Task</label>
+       <Box className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 border-2 shadow-lg p-4">
+
+       <h3 className="font-bold text-lg">Edit the Task</h3>
               <input
+              value={updatedTask}
+              onChange={(e) => setUpdatedTask(e.target.value)}
               type="text"
-              value={editedTask}
-              onChange={(e) => setEditedTask(e.target.value)}
               placeholder="Type here"
-              className="input input-bordered w-full w-full"
-              />
-          
-           <button class="edit-btn">Save</button>
+              className="input input-bordered w-full max-w-xs top-4"
+              />         
+           <button onClick={handleUpdate} className="edit-btn btn-sm btn-circle btn-ghost absolute right-2 bottom-1">
+           <div className="ml-auto">Save</div>
+           </button>
        </Box>
      </Modal>
    </div>
