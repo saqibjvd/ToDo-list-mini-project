@@ -20,7 +20,7 @@ export default function TodoApp() {
       completed: false,
     };
     setTodos([...todos, newTodo]);
-    setNewTask(" "); // not working...this should clear input field
+    setNewTask(" ");
   }
 
   // to delete individual todo
@@ -33,6 +33,11 @@ export default function TodoApp() {
     setTodos([]);
   };
 
+  const clickHandler = (todo) => {
+    todo.completed = !todo.completed;
+    setTodos([...todos])
+  }
+
   return (
     <div>
       <div className="container">
@@ -40,7 +45,7 @@ export default function TodoApp() {
           <h1 className="header">To-do List ✏️</h1>
         </div>
         {/* form */}
-        <div className="form-body">
+        <div className="form-body text-align: center;">
           <form onSubmit={addTask}>
             <input
               type="text"
@@ -60,14 +65,22 @@ export default function TodoApp() {
         </div>
 
         {/* display todo list */}
-        {todos.map((todo, index) => {
-          return (
-            <li className={todo.completed ? "line-through" : ""} key={todo.id}>
-              {todo.task}
-              <button onClick={() => deleteItem(todo.id)}>Delete</button>
-            </li>
-          );
-        })}
+        <div>
+          {todos.map((todo, index) => {
+            return (
+              <li
+                className={todo.completed ? "line-through" : ""}
+                key={todo.id}
+                onClick={(e) => clickHandler(todo)}
+              >
+                {todo.task}
+                <button onClick={() => deleteItem(todo.id)} className="delete">
+                  Delete
+                </button>
+              </li>
+            );
+          })}
+        </div>
 
         <div></div>
       </div>
@@ -75,7 +88,6 @@ export default function TodoApp() {
   );
 }
 
-// click on task to mark as completed
-// delete single task
-// delete all completed task
-// add css tailwind
+
+
+
