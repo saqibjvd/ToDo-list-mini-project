@@ -44,7 +44,8 @@ export default function TodoApp() {
   };
 
   // // mark task as completed /uncompleted
-  const clickHandler = (todo) => { // this is not wroking
+  const clickHandler = (todo) => {
+    // this is not wroking...
     console.log(todo.id, "this is id");
     todos.completed = !todos.completed;
     setTodos([...todos]);
@@ -87,10 +88,10 @@ export default function TodoApp() {
                 className={todo.completed ? "line-through" : ""}
                 key={todo.id}
               >
-                <span onClick={(e) => clickHandler(todo)}>{todo.task}</span>
+                <span onClick={() => clickHandler(todo)}>{todo.task}</span>
 
                 {/* Delete single task */}
-                <button onClick={(e) => deleteItem(todo.id)}>Delete</button>
+                <button onClick={() => deleteItem(todo.id)}>Delete</button>
               </li>
             );
           })}
