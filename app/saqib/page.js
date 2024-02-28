@@ -3,64 +3,97 @@
 import React, { useState } from "react";
 
 export default function TodoApp() {
-  const [todos, setTodos] = useState([
-    { id: 1, task: "Study js", completed: false },
-    { id: 2, task: "complete todo list react", completed: false },
-    { id: 3, task: "Done the shopping", completed: true },
-  ]);
-
   const [newTask, setNewTask] = useState(" ");
 
+  const [todos, setTodos] = useState([
+    { id: 1, task: "Practice more js", completed: false },
+    { id: 2, task: "Learn React", completed: false },
+    { id: 3, task: "Complete Todo list project", completed: false },
+    { id: 4, task: "Learn tailwind", completed: true },
+  ]);
+
+  // this will add new task to the list
   function addTask(e) {
     e.preventDefault();
-    const newTodo = {
-      id: todos[todos.length - 1].id + 1,
-      task: newTask,
-      completed: false,
-    };
-    setTodos([...todos, newTodo]);
+    if (newTask.trim() !== "") {
+      const newTodo = {
+        id: todos.length + 1,
+        task: newTask,
+        completed: false,
+      };
+      setTodos([...todos, newTodo]);
+      setNewTask(" ");
+    }
   }
 
+  // to delete single todo task
+  const deleteItem = (id) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
+
+  // delete completed task from list
+  const deleteCompletedTask = (todo) => {
+    const CompletedTodos = todos.filter((todo) => !todo.completed);
+    setTodos(CompletedTodos);
+  };
+
+  // Delete all task
+  const DeleteAllTask = (todos) => {
+    console.log("im clicked");
+    setTodos([]);
+  };
+
+  // // mark task as completed /uncompleted
+  const clickHandler = (todo) => { // this is not wroking
+    console.log(todo.id, "this is id");
+    todos.completed = !todos.completed;
+    setTodos([...todos]);
+  };
+
   return (
-    <div>
-      <div className="container">
+    <div className="flex justify-center pt-40 text-center sm:text-left">
+      <div>
         <div>
-          <h1 className="header">To-do List ✏️</h1>
+          <h1>To-do List ✏️</h1>
         </div>
-        <div className="form-body">
-          <form id="todo-form" onSubmit={addTask}>
+        {/* form */}
+        <div>
+          <form onSubmit={addTask}>
             <input
               type="text"
-              id="new-todo"
-              // value={newTask}
+              value={newTask}
               onChange={(e) => setNewTask(e.target.value)}
-              placeholder="New Task..."
+              placeholder="Add task"
             />
-
-            <button type="submit" id="submit-new" className="button1">
-              Add
+            <button className="bg-sky-500/100 hover:bg-sky-600" type="submit">
+              +
             </button>
           </form>
         </div>
-        {/* Delete all task */}
-        <div className="delete-all">
-          <button type="button" id="delete-completed" className="button2">
-            Delete all
-          </button>
-        </div>
+
+        {/* Delete completed task */}
         <div>
-          <ul className="todo-list">
-            {/* display todo task */}
-            {/* {todos && todos.length ? "" : "No task.."} */}
-            {todos.map((todo) => (
+          <button onClick={() => deleteCompletedTask(todos)}>
+            Delete Completed
+          </button>
+          <button onClick={() => DeleteAllTask(todos)}>Delete All</button>
+        </div>
+
+        {/* display todo list */}
+        <div>
+          {todos.map((todo) => {
+            return (
               <li
                 className={todo.completed ? "line-through" : ""}
                 key={todo.id}
               >
-                {todo.task}
+                <span onClick={(e) => clickHandler(todo)}>{todo.task}</span>
+
+                {/* Delete single task */}
+                <button onClick={(e) => deleteItem(todo.id)}>Delete</button>
               </li>
-            ))}
-          </ul>
+            );
+          })}
         </div>
       </div>
     </div>
