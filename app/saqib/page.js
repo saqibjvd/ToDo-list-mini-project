@@ -44,8 +44,7 @@ export default function TodoApp() {
   };
 
   // // mark task as completed /uncompleted
-  const clickHandler = (todo) => {
-    // this is not wroking
+  const clickHandler = (todo) => { // this is not wroking
     console.log(todo.id, "this is id");
     todos.completed = !todos.completed;
     setTodos([...todos]);
