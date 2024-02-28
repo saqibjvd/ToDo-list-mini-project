@@ -2,33 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* .container {
-  align-items: baseline;
-  display: flex;
-  align-content: center;
-  justify-content: space-evenly;
-  flex-direction: column;
-  flex-wrap: wrap;
+body{
+  background-color: antiquewhite;
 }
-
-h1 {
-  align-items: center;
-  text-align: center;
-}
-
-.delete-all {
-  margin: 6px;
-  padding: 4px;
-}
-
-.delete{
-    margin: 8px;
-    padding-left: 8px;
-}
-
-li {
-  list-style: none;
-  padding: 5px;
-  margin: 5px;
-  text-align: center;
-} */

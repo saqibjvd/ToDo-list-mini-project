@@ -3,49 +3,61 @@
 import React, { useState } from "react";
 
 export default function TodoApp() {
-  const [newTask, setNewTask] = useState(" "); // for new todo task from input
+  const [newTask, setNewTask] = useState(" ");
 
   const [todos, setTodos] = useState([
-    { id: 1, task: "Study js", completed: false },
-    { id: 2, task: "complete todo list react", completed: false },
-    { id: 3, task: "Done the shopping", completed: false },
+    { id: 1, task: "Practice more js", completed: false },
+    { id: 2, task: "Learn React", completed: false },
+    { id: 3, task: "Complete Todo list project", completed: false },
+    { id: 4, task: "Learn tailwind", completed: true },
   ]);
 
-  // this function will add new task to the list
+  // this will add new task to the list
   function addTask(e) {
     e.preventDefault();
-    const newTodo = {
-      id: todos[todos.length - 1].id + 1,
-      task: newTask,
-      completed: false,
-    };
-    setTodos([...todos, newTodo]);
-    setNewTask(" ");
+    if (newTask.trim() !== "") {
+      const newTodo = {
+        id: todos.length + 1,
+        task: newTask,
+        completed: false,
+      };
+      setTodos([...todos, newTodo]);
+      setNewTask(" ");
+    }
   }
 
-  // to delete individual todo
+  // to delete single todo task
   const deleteItem = (id) => {
-    setTodos(todos.filter((todos) => todos.id !== id));
+    setTodos(todos.filter((todo) => todo.id !== id));
   };
 
-  // delete all items from list
-  const deleteAllItems = (todo) => {
+  // delete completed task from list
+  const deleteCompletedTask = (todo) => {
+    const CompletedTodos = todos.filter((todo) => !todo.completed);
+    setTodos(CompletedTodos);
+  };
+
+  // Delete all task
+  const DeleteAllTask = (todos) => {
+    console.log("im clicked");
     setTodos([]);
   };
 
+  // // mark task as completed /uncompleted
   const clickHandler = (todo) => {
-    todo.completed = !todo.completed;
-    setTodos([...todos])
-  }
+    console.log(todo.id, "this is id");
+    todos.completed = !todos.completed;
+    setTodos([...todos]);
+  };
 
   return (
-    <div>
-      <div className="container">
+    <div className="flex justify-center pt-40 text-center sm:text-left">
+      <div>
         <div>
-          <h1 className="header">To-do List ✏️</h1>
+          <h1>To-do List ✏️</h1>
         </div>
         {/* form */}
-        <div className="form-body text-align: center;">
+        <div>
           <form onSubmit={addTask}>
             <input
               type="text"
@@ -53,41 +65,39 @@ export default function TodoApp() {
               onChange={(e) => setNewTask(e.target.value)}
               placeholder="Add task"
             />
-            <button type="submit" className="add">
-              Add
+            <button className="bg-sky-500/100 hover:bg-sky-600" type="submit">
+              +
             </button>
           </form>
         </div>
 
-        {/* Delete all task */}
-        <div className="delete-all">
-          <button onClick={() => deleteAllItems(todos)}>Delete all</button>
+        {/* Delete completed task */}
+        <div>
+          <button onClick={() => deleteCompletedTask(todos)}>
+            Delete Completed
+          </button>
+          <button onClick={() => DeleteAllTask(todos)}>Delete All</button>
         </div>
 
         {/* display todo list */}
         <div>
-          {todos.map((todo, index) => {
+          {todos.map((todo) => {
             return (
               <li
                 className={todo.completed ? "line-through" : ""}
                 key={todo.id}
-                onClick={(e) => clickHandler(todo)}
               >
-                {todo.task}
-                <button onClick={() => deleteItem(todo.id)} className="delete">
-                  Delete
-                </button>
+                <span onClick={(e) => clickHandler(todo)}>
+                  {todo.task}
+                </span>
+
+                {/* Delete single task */}
+                <button onClick={(e) => deleteItem(todo.id)}>Delete</button>
               </li>
             );
           })}
         </div>
-
-        <div></div>
       </div>
     </div>
   );
 }
-
-
-
-
