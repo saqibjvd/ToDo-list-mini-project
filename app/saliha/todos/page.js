@@ -1,19 +1,39 @@
 
 "use client"
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Todo from './todo';
 import { FaPlus } from "react-icons/fa";
 
 
+
+
 export default function TodoList() {
-  const [todos, setTodos] = useState([
-    { id: 1, task: "learn react", completed: false },
-    { id: 2, task: "learn next.js", completed: true },
-    { id: 3, task: "learn about react props", completed: true },
-    { id: 4, task: "todo mini app", completed: false }
-  ]);
+  const [todos, setTodos] = useState([]);
   const [task, setTask] = useState("");
+
+  const BASE_URL = 'http://localhost:8080/todos'
+
+useEffect(() => {
+  fetch(BASE_URL, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+    .then((response) => {
+      if(!response.json){
+        throw new Error('Failed to fetch todos')
+      }
+      return response.json()
+    })
+    .then((data) => {
+      console.log(data)
+      setTodos(data.todos);
+    })
+    .catch(error => console.log(error))
+}, [])
+
 
   const clickHandler = (todo) => {
     todo.completed = !todo.completed;
@@ -43,9 +63,22 @@ export default function TodoList() {
     }));
   };
 
-  const deleteTask = (taskId) => {
-    setTodos(todos.filter((todo) => todo.id !== taskId));
-  };
+  // const deleteTask = (taskId) => {
+  //   setTodos(todos.filter((todo) => todo.id !== taskId));
+  // };
+
+  const deleteTask = async (id) => {
+    try {
+      await fetch(`http://localhost:8080/todos/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8'
+        }
+      });
+    } catch (error) {
+      console.error('Error deleting task:', error);
+    }
+  };  
 
   const deleteAllCompletedTasks = (completed) => {
     const uncompletedTasks = todos.filter(todo => !todo.completed)
