@@ -5,8 +5,9 @@ const Tasks = ({ tasks, onDelete }) => {
   return (
     <section>
       {tasks.map((task) => (
-        <Task key={task.id} task={task} onDelete={onDelete} />
+        <Task key={task.id} task={task} onDelete={() => onDelete(task.id)} />
       ))}
+      <footer>Made by dami</footer>
     </section>
   );
 };
