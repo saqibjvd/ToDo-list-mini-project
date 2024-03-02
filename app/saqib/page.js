@@ -1,70 +1,99 @@
 "use client";
-import Image from "next/image";
+
 import React, { useState } from "react";
 
-const todos = [
-  { task: "Study js", completed: false },
-  { task: "complete todo list react", completed: false },
-  { task: "Done the shopping", completed: true },
-];
-
-// Add Task button function
-function add(e) {
-}
-
-// Delete task button function
-function deleteTask(id) {}
-
-// Delete all task button function
-function deleteAllTask() {}
-
-// mark task as completed function
-// function markTodo(index) {
-//   todos[index].completed = !todos[index].completed;
-//    displayToDoList();
-// }
-
 export default function TodoApp() {
-  const [newTask, setNewTask] = useState("");
+  const [newTask, setNewTask] = useState(" ");
+
+  const [todos, setTodos] = useState([
+    { id: 1, task: "Practice more js", completed: false },
+    { id: 2, task: "Learn React", completed: false },
+    { id: 3, task: "Complete Todo list project", completed: false },
+    { id: 4, task: "Learn tailwind", completed: true },
+  ]);
+
+  // this will add new task to the list
+  function addTask(e) {
+    e.preventDefault();
+    if (newTask.trim() !== "") {
+      const newTodo = {
+        id: todos.length + 1,
+        task: newTask,
+        completed: false,
+      };
+      setTodos([...todos, newTodo]);
+      setNewTask(" ");
+    }
+  }
+
+  // to delete single todo task
+  const deleteItem = (id) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
+
+  // delete completed task from list
+  const deleteCompletedTask = (todo) => {
+    const CompletedTodos = todos.filter((todo) => !todo.completed);
+    setTodos(CompletedTodos);
+  };
+
+  // Delete all task
+  const DeleteAllTask = (todos) => {
+    console.log("im clicked");
+    setTodos([]);
+  };
+
+  // // mark task as completed /uncompleted
+  const clickHandler = (todo) => { // this is not wroking
+    console.log(todo.id, "this is id");
+    todos.completed = !todos.completed;
+    setTodos([...todos]);
+  };
 
   return (
-    <div>
-      <div className="container">
+    <div className="flex justify-center pt-40 text-center sm:text-left">
+      <div>
         <div>
           <h1>To-do List ✏️</h1>
         </div>
-        <div className="form-body">
-          <form id="todo-form" onSubmit={add}>
+        {/* form */}
+        <div>
+          <form onSubmit={addTask}>
             <input
               type="text"
-              id="new-todo"
-              // value={newTask}
-              onChange={(e) => console.log(e.target.value)}
-              placeholder="New Task..."
+              value={newTask}
+              onChange={(e) => setNewTask(e.target.value)}
+              placeholder="Add task"
             />
-
-            <button type="submit" id="submit-new" className="button1">
-              Add
+            <button className="bg-sky-500/100 hover:bg-sky-600" type="submit">
+              +
             </button>
           </form>
         </div>
-        {/* Delete all task */}
-        <div className="delete-all">
-          <button type="button" id="delete-completed" className="button2">
-            Delete all
-          </button>
-        </div>
+
+        {/* Delete completed task */}
         <div>
-          <ul className="todo-list">
-            {/* display todo task */}
-            {todos && todos.length ? "" : "No task.."}
-            {todos &&
-              todos.map((todo) => (
-                <li className="todo-li" key={todo.task}>
-                  {todo.task}
-                </li>
-              ))}
-          </ul>
+          <button onClick={() => deleteCompletedTask(todos)}>
+            Delete Completed
+          </button>
+          <button onClick={() => DeleteAllTask(todos)}>Delete All</button>
+        </div>
+
+        {/* display todo list */}
+        <div>
+          {todos.map((todo) => {
+            return (
+              <li
+                className={todo.completed ? "line-through" : ""}
+                key={todo.id}
+              >
+                <span onClick={(e) => clickHandler(todo)}>{todo.task}</span>
+
+                {/* Delete single task */}
+                <button onClick={(e) => deleteItem(todo.id)}>Delete</button>
+              </li>
+            );
+          })}
         </div>
       </div>
     </div>

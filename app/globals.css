@@ -1,3 +1,4 @@
+
 h1 {
   color: red;
   font-family: fantasy;
@@ -15,4 +16,11 @@ h1 {
   @tailwind base;
   @tailwind components;
   @tailwind utilities;
-  
+ 
+@tailwind base; 
+@tailwind components;
+@tailwind utilities;
+
+body{
+  background-color: antiquewhite;
+}
