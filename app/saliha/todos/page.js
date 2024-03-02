@@ -6,8 +6,6 @@ import Todo from './todo';
 import { FaPlus } from "react-icons/fa";
 
 
-
-
 export default function TodoList() {
   const [todos, setTodos] = useState([]);
   const [task, setTask] = useState("");
@@ -40,52 +38,60 @@ useEffect(() => {
     setTodos([...todos]);
   }
 
-  const addNewTask = (e) => {
+  const addNewTask = async (e) => {
     e.preventDefault();
-    if (task.trim() !== "") {
-      const newTask = {
-        // id: todos[todos.length - 1].id + 1,
-        id: todos.length + 1,
-        task: task,
-        completed: false
-      };
-      setTodos([...todos, newTask]);
+    try {
+      const response = await fetch('http://localhost:8080/todos', {
+        method: 'POST',
+        body: JSON.stringify({
+          task:task,
+          completed: false
+          }),
+          headers: {
+            'Content-Type': 'application/json'
+          },
+      });
+        if (!response.ok) {
+        throw new Error('Failed to add task');
+      }
+      const newTask = await response.json();
+      setTodos([newTask, ...todos]);
       setTask("");
+    } catch (error) {
+      console.error('Error adding task:', error);
     }
   };
   
-  const updateTask = (taskId, updatedTask) => {
-    setTodos(todos.map(todo => {
-      if (todo.id === taskId) {
-        return { ...todo, task: updatedTask };
-      }
-      return todo;
-    }));
+  const updateTask = async(todo) => {
+    const res = await fetch (`${BASE_URL}/todos/${id}`, {
+      method: "PUT",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(todo)
+    })
+    const updatedTodo = await res.json();
+    return updatedTodo;
   };
 
-  // const deleteTask = (taskId) => {
-  //   setTodos(todos.filter((todo) => todo.id !== taskId));
-  // };
-
   const deleteTask = async (id) => {
+    console.log('deleteTask', id)
     try {
-      await fetch(`http://localhost:8080/todos/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8'
-        }
-      });
+    await fetch(`http://localhost:8080/todos/${id}`, {
+        method: 'DELETE'
+        })
+    // Update the todos state after deleting the task
+    setTodos(todos.filter(todo => todo.id !== id));
     } catch (error) {
       console.error('Error deleting task:', error);
     }
-  };  
+  }; 
 
   const deleteAllCompletedTasks = (completed) => {
     const uncompletedTasks = todos.filter(todo => !todo.completed)
     setTodos(uncompletedTasks);
   }
   
-
   return (
     <main className="max-w-4xl mx-auto mt-20 mb-15">
     <div>

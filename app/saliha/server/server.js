@@ -1,5 +1,5 @@
 const express = require('express');
-const lodash = require("lodash");
+const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
 const port = 8080;
@@ -25,7 +25,7 @@ app.get("/", (req, res) => {
  app.post('/todos', (req, res) => {
   console.log("post a new task")
  
-  const { task, completed } = req.body
+const { task, completed } = req.body
  const newTask = {
    id: todos.length + 1,
    task,
@@ -35,19 +35,21 @@ app.get("/", (req, res) => {
  res.json(newTask)
 })
 
-
 app.put('/todos/:task', (req, res) => {
  console.log("Update a new task")
- const updatedTask = req.body.id.task.completed
+ const updatedTask = req.body
  todos.push(updatedTask)
  res.send(updatedTask)
 })
 
-
 app.delete('/todos/:id', (req, res) => {
   console.log("Delete a task by id")
-  const deletedTask = req.params.id
-  res.status(200).send(deletedTask)
+  const taskId = parseInt(req.params.id)
+  res.status(200).json({ message: `Task with ID ${taskId} deleted successfully` });
+ })
+
+ app.delete('./todos/completed', (req, res) => {
+  console.log('Delete completed tasks', request.params.completed)
  })
  
  
