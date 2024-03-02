@@ -1,3 +1,22 @@
+
+h1 {
+  color: red;
+  font-family: fantasy;
+  font-weight: bolder;
+  font-size: xx-large;
+  text-shadow: 2px 2px 5px red;
+  margin-top: 8rem;
+  }
+  
+  .th{
+    color: red;
+    font-size: medium;
+  }
+
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+ 
 @tailwind base; 
 @tailwind components;
 @tailwind utilities;
