@@ -40,7 +40,7 @@ app.put('/todos/:task', (req, res) => {
  const updatedTask = req.body
  todos.push(updatedTask)
  res.send(updatedTask)
-})
+}) 
 
 app.delete('/todos/:id', (req, res) => {
   console.log("Delete a task by id")
