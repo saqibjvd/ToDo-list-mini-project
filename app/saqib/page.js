@@ -1,5 +1,5 @@
 "use client";
-// import Task from "./components/task";
+
 import React, { useState } from "react";
 
 export default function TodoApp() {
@@ -50,9 +50,8 @@ export default function TodoApp() {
   };
 
   return (
-    <div className="container">
-      {/* flex justify-center pt-40 text-center sm:text-left */}
-      <div>
+    <div>
+      <div className="container">
         <div>
           <h2 className="todo-heading">To-do List ✏️</h2>
         </div>
@@ -113,15 +112,3 @@ export default function TodoApp() {
     </div>
   );
 }
-
-// export default function TodoApp() {
-//  {addTask, deleteCompletedTask, DeleteAllTask, clickHandler}
-//   return (
-//     <Task
-//     addTask={addTask}
-//     deleteCompletedTask={deleteCompletedTask}
-//     DeleteAllTask={DeleteAllTask}
-//     clickHandler={clickHandler}
-//     />
-//   );
-// }

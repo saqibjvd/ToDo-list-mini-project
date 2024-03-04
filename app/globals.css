@@ -10,10 +10,13 @@
 }
 
 .container {
+  background: linear-gradient(135deg, #153677, #4e085f);
   width: 100%;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #9aafdb, #d399e1);
-  padding: 10px;
+  max-width: 540px;
+  margin: 100px auto 20px;
+  padding: 40px 30px 70px;
+  border-radius: 10px;
+  box-shadow: 10px 10px 8px #888888;
 }
 
 .todo-heading {
@@ -26,13 +29,13 @@
   box-shadow: 10px 10px 8px #888888;
 }
 
-/* .todo-heading h2 {
+.todo-heading h2 {
   color: #002765;
   display: flex;
   align-items: center;
   margin-bottom: 20px;
   text-align: center;
-} */
+}
 
 .form-body {
   display: flex;
@@ -65,7 +68,7 @@ input {
   /* background: transparent; */
   padding: 10px;
   font-weight: 14px;
-  box-shadow: 10px 10px 8px #888888;
+  /* box-shadow: 10px 10px 8px #888888; */
 }
 
 .button-add {
@@ -77,7 +80,7 @@ input {
   font-size: 14px;
   border-radius: 20px;
   cursor: pointer;
-  box-shadow: 10px 10px 8px #888888;
+  /* box-shadow: 10px 10px 8px #888888; */
 }
 
 .delete-completed {
@@ -89,7 +92,7 @@ input {
   font-size: 12px;
   border-radius: 10px;
   cursor: pointer;
-  box-shadow: 10px 10px 8px #888888;
+ /* box-shadow: 10px 10px 8px #888888; */
 }
 
 .delete-all {
@@ -102,16 +105,17 @@ input {
   font-size: 12px;
   border-radius: 10px;
   cursor: pointer;
-  box-shadow: 10px 10px 8px #888888;
+  /* box-shadow: 10px 10px 8px #888888; */
 }
 
 ul li {
   list-style: none;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
   font-family: fantasy;
   cursor: pointer;
+  color: #fff;
 }
 
 .delete {
@@ -124,7 +128,7 @@ ul li {
   border-radius: 10px;
   cursor: pointer;
   margin: 10px 10px;
-  box-shadow: 10px 10px 8px #888888;
+  /* box-shadow: 10px 10px 8px #888888; */
 }
 
 .buttons {
