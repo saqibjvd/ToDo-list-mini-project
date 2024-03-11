@@ -1,13 +1,20 @@
 'use client'  // this is a next.js directive that allows you to use 'useEffect'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Todo from './todo'
 
 export default function TodoList() {
-  const [todos, setTodos] = useState([
-    { id: 1, task: "learn React", completed: false },
-    { id: 2, task: "learn Next.js", completed: true },
-  ]);
+  const [todos, setTodos] = useState([]);
+  useEffect(() => {
+    fetch(
+      "/jonathan/api/todo"
+    ).then((response) => {
+      return response.json()
+    }).then((response_json) => {
+      setTodos(response_json);
+    });
+  }, []);
+
   const clickHandler = (todo) => {
     todo.completed = !todo.completed;
     setTodos([...todos]);

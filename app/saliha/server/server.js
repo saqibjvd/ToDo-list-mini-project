@@ -16,6 +16,10 @@ app.get("/", (req, res) => {
   res.send("Welcome!, add your todos here.");
  });
  
+app.get("/jonathan/todo", (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.stringify("Jonathan"));
+});
  
  app.get('/todos', (req, res) => {
   console.log("Get todos")
