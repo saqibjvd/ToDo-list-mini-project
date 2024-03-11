@@ -16,8 +16,14 @@ export default function TodoList() {
   }, []);
 
   const clickHandler = (todo) => {
-    todo.completed = !todo.completed;
-    setTodos([...todos]);
+    fetch(
+      `/jonathan/api/todo/${todo.id}`,
+      { method: 'DELETE' }
+    ).then((response) => {
+      return response.json()
+    }).then((response_json) => {
+      setTodos(response_json);
+    })
   }
 
   return (

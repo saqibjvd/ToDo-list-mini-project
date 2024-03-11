@@ -50,4 +50,6 @@ app.get('/jonathan/todo', (req, res) => {
 ```
 * remember that typing in a URL in your browser is the same as a GET
 * it is good practice to put all of your `route.js` under an `app/api` subfolder
+* for dynamic routes, it is still a folder name, but with square brackets, e.g. `app/api/todo/[id]/route.js`
+  * [next.js documentation](https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes)
 
