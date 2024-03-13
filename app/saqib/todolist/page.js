@@ -1,15 +1,21 @@
 "use client";
-import React, { useState} from "react";
+
+import React, { useEffect, useState } from "react";
 
 export default function TodoApp() {
   const [newTask, setNewTask] = useState("");
 
-  const [todos, setTodos] = useState([
-    // { id: 1, task: "Practice more js", completed: false },
-    // { id: 2, task: "Learn React", completed: false },
-    // { id: 3, task: "Complete Todo list project", completed: false },
-    // { id: 4, task: "Learn tailwind", completed: true },
-  ]);
+  const [todos, setTodos] = useState([]);
+
+  useEffect(() => {
+    fetch("/saqib/api/todo")
+      .then((response) => {
+        return response.json();
+      })
+      .then((response) => {
+        setTodos(response);
+      });
+  }, []);
 
   // this will add new task to the list
   function addTask(e) {

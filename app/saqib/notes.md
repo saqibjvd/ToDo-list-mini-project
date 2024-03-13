@@ -13,3 +13,4 @@ steps for mark as completed....
 3.  setTodos([...todos, newTodo]); call this
 4. only use currly barckets when creating an object when theres is multiple keys / more than one item.
 5. when passing array do not use extra {}, just pass name of the array.
+6. GET 
