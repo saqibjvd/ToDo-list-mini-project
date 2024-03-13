@@ -9,9 +9,3 @@ export async function GET() {
   return Response.json( todos );
 }
 
-export async function POST(request) {
-  const data = await request.json();
-  return Response.json({
-    name: `Saqib ${data.last_name}`,
-  });
-}

@@ -10,7 +10,8 @@ in react we write javaScript code in {}.
 steps for mark as completed....
 1. onclick to list items.
 2. change true to false and  flase to true "todo.completed"
-3.  setTodos([...todos, newTodo]); call this
+3. setTodos([...todos, newTodo]); call this
 4. only use currly barckets when creating an object when theres is multiple keys / more than one item.
 5. when passing array do not use extra {}, just pass name of the array.
-6. GET 
+6. GET - we used route.js and used useEffect() inside useeffect we used fetch("/saib/api").. remeber to remove local host from fetch. 
+7. when we use fetch we get the first promise we get is HTTP response on HTTP response we get json() response. then that return 2nd promise which is javascript response. 
