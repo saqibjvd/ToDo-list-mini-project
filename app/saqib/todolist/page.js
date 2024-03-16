@@ -7,6 +7,7 @@ export default function TodoApp() {
 
   const [todos, setTodos] = useState([]);
 
+  // display todo list from backend
   useEffect(() => {
     fetch("/saqib/api/todo")
       .then((response) => {
@@ -17,18 +18,24 @@ export default function TodoApp() {
       });
   }, []);
 
+  // add new todo list to list
+
   // this will add new task to the list
   function addTask(e) {
     e.preventDefault();
-    if (newTask.trim() !== "") {
-      const newTodo = {
-        id: todos.length + 1,
-        task: newTask,
-        completed: false,
-      };
-      setTodos([...todos, newTodo]);
-      setNewTask(" ");
-    }
+    fetch("/saqib/api/todo", {
+      method: "POST",
+      body: JSON.stringify({ newTask }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((response) => {
+        setTodos(response);
+        setNewTask(" ");
+      });
+
+    // setTodos([...todos, newTodo]);
   }
 
   // to delete single todo task
