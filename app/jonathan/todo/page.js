@@ -7,7 +7,7 @@ export default function TodoList() {
   const [todos, setTodos] = useState([]);
   useEffect(() => {
     fetch(
-      "/jonathan/api/todo"
+      "/saliha/api/todo"
     ).then((response) => {
       return response.json()
     }).then((response_json) => {
