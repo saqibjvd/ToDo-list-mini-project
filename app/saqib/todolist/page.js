@@ -18,7 +18,7 @@ export default function TodoApp() {
       });
   }, []);
 
-  // add new todo list to list
+ 
 
   // this will add new task to the list
   function addTask(e) {
@@ -35,7 +35,6 @@ export default function TodoApp() {
         setNewTask(" ");
       });
 
-    // setTodos([...todos, newTodo]);
   }
 
   // to delete single todo task
