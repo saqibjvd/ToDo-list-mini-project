@@ -1,5 +1,6 @@
 "use client";
 
+import { data } from "autoprefixer";
 import React, { useEffect, useState } from "react";
 
 export default function TodoApp() {
@@ -18,8 +19,6 @@ export default function TodoApp() {
       });
   }, []);
 
- 
-
   // this will add new task to the list
   function addTask(e) {
     e.preventDefault();
@@ -32,14 +31,25 @@ export default function TodoApp() {
       })
       .then((response) => {
         setTodos(response);
-        setNewTask(" ");
+        setNewTask("");
       });
-
   }
 
   // to delete single todo task
-  const deleteItem = (id) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
+
+  const deleteItem = async (id) => {
+    fetch("/saqib/api/todo", {
+      method: "DELETE",
+      body: JSON.stringify({ id }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((response) => {
+        setTodos(response);
+        // setNewTask("");
+      });
+    // setTodos(todos.filter((todo) => todo.id !== id));
   };
 
   // delete completed task from list
@@ -50,7 +60,6 @@ export default function TodoApp() {
 
   // Delete all task
   const DeleteAllTask = (todos) => {
-    console.log("im clicked");
     setTodos([]);
   };
 
@@ -106,7 +115,9 @@ export default function TodoApp() {
                     className={todo.completed ? "line-through" : ""}
                     key={todo.id}
                   >
-                    <span onClick={() => clickHandler(todo)}>{todo.task}</span>
+                    <span onClick={() => clickHandler(todo)}>
+                      {todo.id}. {todo.task}
+                    </span>
                     {/* Delete single task */}
                     <button
                       className="delete"

@@ -92,7 +92,7 @@ input {
   font-size: 12px;
   border-radius: 10px;
   cursor: pointer;
- /* box-shadow: 10px 10px 8px #888888; */
+  /* box-shadow: 10px 10px 8px #888888; */
 }
 
 .delete-all {

@@ -20,7 +20,7 @@ export default function Home() {
         setName(response_json.name);
       });
   });
-  return <h1>Hello {name}</h1>;
+  return <h1>Hello and welcome to my todo list app {name}</h1>;
 }
 
 
