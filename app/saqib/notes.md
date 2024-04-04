@@ -15,3 +15,5 @@ steps for mark as completed....
 5. when passing array do not use extra {}, just pass name of the array.
 6. GET - we used route.js and used useEffect() inside useeffect we used fetch("/saib/api").. remeber to remove local host from fetch. 
 7. when we use fetch we get the first promise we get is HTTP response on HTTP response we get json() response. then that return 2nd promise which is javascript response. 
+8. always wirte dynamic route in [] and their router such as delete, PUT request in here.
+9. implement on front end DEL route.

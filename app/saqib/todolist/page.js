@@ -38,9 +38,8 @@ export default function TodoApp() {
   // to delete single todo task
 
   const deleteItem = async (id) => {
-    fetch("/saqib/api/todo", {
+    fetch(`/saqib/api/todo/${id}`, {
       method: "DELETE",
-      body: JSON.stringify({ id }),
     })
       .then((response) => {
         return response.json();
@@ -49,7 +48,7 @@ export default function TodoApp() {
         setTodos(response);
         // setNewTask("");
       });
-    // setTodos(todos.filter((todo) => todo.id !== id));
+   
   };
 
   // delete completed task from list
