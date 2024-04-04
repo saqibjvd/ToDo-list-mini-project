@@ -6,8 +6,11 @@ export async function GET() {
 
 export async function POST(req, res) {
   const data = await req.json();
+  const id = todoData.todos.length
+    ? todoData.todos[todoData.todos.length - 1].id + 1
+    : 1;
   const newTodo = {
-    id: todoData.todos[todoData.todos.length - 1].id + 1,
+    id: id,
     task: data.newTask,
     completed: false,
   };
@@ -18,9 +21,9 @@ export async function POST(req, res) {
 export async function DELETE(req) {
   const data = await req.json();
   if (data.completed) {
-    DeleteCompletedTask();
+    todoData.DeleteCompletedTask();
   } else {
-    DeleteAllTask();
+    todoData.DeleteAllTask();
   }
   return Response.json(todoData.todos);
 }

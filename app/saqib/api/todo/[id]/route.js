@@ -6,3 +6,4 @@ export async function DELETE(req, route) {
   return Response.json(todoData.todos);
 }
 
+// PUT request here for mark as completed.

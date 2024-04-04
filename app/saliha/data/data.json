@@ -1,0 +1,7 @@
+
+  [
+    { "id": 1, "task": "learn react", "completed": false },
+    { "id": 2, "task": "learn next.js", "completed": true },
+    { "id": 3, "task": "learn about react props", "completed": true },
+    { "id": 4, "task": "todo mini app", "completed": false }
+  ]

@@ -1,6 +1,5 @@
 "use client";
 
-import { data } from "autoprefixer";
 import React, { useEffect, useState } from "react";
 
 export default function TodoApp() {
@@ -37,7 +36,7 @@ export default function TodoApp() {
 
   // to delete single todo task
 
-  const deleteItem = async (id) => {
+  const deleteItem = (id) => {
     fetch(`/saqib/api/todo/${id}`, {
       method: "DELETE",
     })
@@ -46,20 +45,35 @@ export default function TodoApp() {
       })
       .then((response) => {
         setTodos(response);
-        // setNewTask("");
       });
-   
   };
 
   // delete completed task from list
-  const deleteCompletedTask = (todo) => {
-    const CompletedTodos = todos.filter((todo) => !todo.completed);
-    setTodos(CompletedTodos);
+  const deleteCompletedTask = () => {
+    fetch(`/saqib/api/todo`, {
+      method: "DELETE",
+      body: JSON.stringify({ completed: true }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((response) => {
+        setTodos(response);
+      });
   };
 
   // Delete all task
-  const DeleteAllTask = (todos) => {
-    setTodos([]);
+  const DeleteAllTask = () => {
+    fetch(`/saqib/api/todo`, {
+      method: "DELETE",
+      body: JSON.stringify({ completed: false }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((response) => {
+        setTodos(response);
+      });
   };
 
   // mark task as completed /uncompleted
@@ -94,11 +108,11 @@ export default function TodoApp() {
         <div className="buttons">
           <button
             className="delete-completed"
-            onClick={() => deleteCompletedTask(todos)}
+            onClick={deleteCompletedTask}
           >
             Delete Completed
           </button>
-          <button className="delete-all" onClick={() => DeleteAllTask(todos)}>
+          <button className="delete-all" onClick={ DeleteAllTask}>
             Delete All
           </button>
         </div>
@@ -106,29 +120,27 @@ export default function TodoApp() {
 
         {/* display todo list */}
         <div>
-          {todos.map((todo) => {
-            return (
-              <>
-                <ul>
-                  <li
-                    className={todo.completed ? "line-through" : ""}
-                    key={todo.id}
+          <ul>
+            {todos.map((todo) => {
+              return (
+                <li
+                  className={todo.completed ? "line-through" : ""}
+                  key={todo.id}
+                >
+                  <span onClick={() => clickHandler(todo)}>
+                    {todo.id}. {todo.task}
+                  </span>
+                  {/* Delete single task */}
+                  <button
+                    className="delete"
+                    onClick={() => deleteItem(todo.id)}
                   >
-                    <span onClick={() => clickHandler(todo)}>
-                      {todo.id}. {todo.task}
-                    </span>
-                    {/* Delete single task */}
-                    <button
-                      className="delete"
-                      onClick={() => deleteItem(todo.id)}
-                    >
-                      Delete
-                    </button>
-                  </li>
-                </ul>
-              </>
-            );
-          })}
+                    Delete
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </div>
     </div>
