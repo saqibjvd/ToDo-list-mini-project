@@ -21,6 +21,9 @@ export default function TodoApp() {
   // this will add new task to the list
   function addTask(e) {
     e.preventDefault();
+    if (newTask === "") {
+      alert("Add new task!...");
+    }
     fetch("/saqib/api/todo", {
       method: "POST",
       body: JSON.stringify({ newTask }),
@@ -78,10 +81,10 @@ export default function TodoApp() {
 
   // mark task as completed /uncompleted
   const clickHandler = (todo) => {
-   fetch(`/saqib/api/todo/${todo.id}` , {
-    method: "PUT"
-   })
-   .then((response) => {
+    fetch(`/saqib/api/todo/${todo.id}`, {
+      method: "PUT",
+    })
+      .then((response) => {
         return response.json();
       })
       .then((response) => {
@@ -113,13 +116,10 @@ export default function TodoApp() {
 
         {/* Delete completed task */}
         <div className="buttons">
-          <button
-            className="delete-completed"
-            onClick={deleteCompletedTask}
-          >
+          <button className="delete-completed" onClick={deleteCompletedTask}>
             Delete Completed
           </button>
-          <button className="delete-all" onClick={ DeleteAllTask}>
+          <button className="delete-all" onClick={DeleteAllTask}>
             Delete All
           </button>
         </div>

@@ -1,11 +1,11 @@
 export let todos = [
   { id: 1, task: "Learn javaScript", completed: false },
   { id: 2, task: "Learn React", completed: false },
-  { id: 3, task: "Learn Node", completed: true },
+  { id: 3, task: "Learn Node", completed: false },
   { id: 4, task: "Complete Todo list project", completed: false },
   { id: 5, task: "Learn Next.js", completed: false },
-  { id: 6, task: "Complete Task 1", completed: true },
-  { id: 7, task: "Complete task 2", completed: true },
+  { id: 6, task: "Complete Task 1", completed: false },
+  { id: 7, task: "Complete task 2", completed: false },
   { id: 8, task: "Complete Task 3", completed: false },
 ];
 
