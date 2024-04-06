@@ -7,3 +7,8 @@ export async function DELETE(req, route) {
 }
 
 // PUT request here for mark as completed.
+export async function PUT(req, route){
+    const id = parseInt(route.params.id)
+    todoData.MarkAsCompleted(id)
+    return Response.json(todoData.todos)
+}

@@ -78,8 +78,15 @@ export default function TodoApp() {
 
   // mark task as completed /uncompleted
   const clickHandler = (todo) => {
-    todo.completed = !todo.completed;
-    setTodos([...todos]);
+   fetch(`/saqib/api/todo/${todo.id}` , {
+    method: "PUT"
+   })
+   .then((response) => {
+        return response.json();
+      })
+      .then((response) => {
+        setTodos(response);
+      });
   };
 
   return (
