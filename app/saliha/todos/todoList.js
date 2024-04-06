@@ -1,6 +1,6 @@
 import Todo from "./todo";
 
-export default function TodoList({todos}) {
+export default function TodoList({todos, setTodos}) {
 
   return (
     <>
@@ -16,7 +16,7 @@ export default function TodoList({todos}) {
           </thead>
           <tbody>            
             {todos.map(todo => 
-              <Todo 
+              <Todo setTodos={setTodos} 
               key={todo.id}
               todo={todo}                  
               />
@@ -27,3 +27,6 @@ export default function TodoList({todos}) {
     </>
   );
 }
+
+
+

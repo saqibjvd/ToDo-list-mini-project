@@ -1,4 +1,4 @@
-let db = require('../../database');
+let db = require("../../database");
 
 export function DELETE(request, route) {
   const id = parseInt(route.params.id);
@@ -6,12 +6,11 @@ export function DELETE(request, route) {
   return Response.json(db.getTodos());
 }
 
-
 export async function PUT(request, route) {
   try {
     const id = parseInt(route.params.id);
-    const { task } = await request.json();
-    db.updateTodo(id, task);
+    const { task, completed } = await request.json();
+    db.updateTodo(id, task, completed);
     return Response.json(db.getTodos(), {
       status: 200,
       statusText: "Todo item updated",
@@ -26,3 +25,5 @@ export async function PUT(request, route) {
     );
   }
 }
+
+

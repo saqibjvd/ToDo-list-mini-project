@@ -5,8 +5,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import Modal from "../Modal";
 
-
-export default function AddTask({setTodos}) {
+export default function AddTask({ setTodos }) {
   const [newTask, setNewTask] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -14,6 +13,7 @@ export default function AddTask({setTodos}) {
 
   async function handleAddNewTask(e) {
     e.preventDefault();
+
     await fetch("/saliha/api/todo", {
       method: "POST",
       headers: {
@@ -27,11 +27,20 @@ export default function AddTask({setTodos}) {
     router.refresh();
   }
 
+  const handleDeleteCompletedTasks = async (completed) => {
+    await fetch(`/saliha/api/todo`, {
+      method: "DELETE",
+    })
+    .then((response) => response.json())
+    .then((response) => setTodos(response))
+  };
+
+
   return (
     <div>
       <button
         onClick={() => setModalOpen(true)}
-        className="btn  text-purple-900 bg-cyan-500 w-full"
+        className="btn  text-purple-900 bg-cyan-500 hover:bg-cyan-300 w-full"
       >
         Add New Task
         <AiOutlinePlus className="font-b  text-purple-900" size={15} />
@@ -53,6 +62,12 @@ export default function AddTask({setTodos}) {
           </div>
         </form>
       </Modal>
+      <button
+          onClick={handleDeleteCompletedTasks}
+          className="btn size={15} text-purple-900 bg-cyan-500 hover:bg-red-600 w-full"
+        >
+          Delete Completed Tasks
+        </button>
     </div>
   );
 }

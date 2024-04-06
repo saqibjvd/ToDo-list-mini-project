@@ -6,18 +6,28 @@ import Modal from "../Modal";
 import { useRouter } from "next/navigation";
 
 export default function Todo({ todo, setTodos }) {
-  const [isChecked, setIsChecked] = useState(todo.task);
   const [openModalEdit, setOpenModalEdit] = useState(false);
   const [newEditedValue, setNewEditedValue] = useState("");
   const [openModalDelete, setOpenModalDelete] = useState(false);
 
   const router = useRouter();
 
-  const toggleTodo = () => {
-    setIsChecked(!isChecked);
+  const toggleTodo = (e) => {
+    e.preventDefault();
+    console.log(todo);
+    const todoToToggle = {
+      task: todo.task,
+      completed: !todo.completed,
+    };
+    fetch(`/saliha/api/todo/${todo.id}`, {
+      method: "PUT",
+      body: JSON.stringify(todoToToggle),
+    })
+      .then((response) => response.json())
+      .then((response) => setTodos(response));
   };
 
-  const handleEditTask = async (e) => {
+  const handleEditTask = (e) => {
     e.preventDefault();
     if (!newEditedValue.trim()) {
       console.error("Task value is empty");
@@ -25,15 +35,18 @@ export default function Todo({ todo, setTodos }) {
     }
     try {
       const todoToUpdate = {
-        task: newEditedValue
+        task: newEditedValue,
+        completed: todo.completed,
       };
-      await fetch(`/saliha/api/todo/${todo.id}`, {
+      fetch(`/saliha/api/todo/${todo.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(todoToUpdate),
       })
+        .then((response) => response.json())
+        .then((response) => setTodos(response));
       setOpenModalEdit(false);
       router.refresh();
     } catch (error) {
@@ -44,25 +57,22 @@ export default function Todo({ todo, setTodos }) {
   const handleDeleteTask = async (todo) => {
     await fetch(`/saliha/api/todo/${todo.id}`, {
       method: "DELETE",
-      headers: {
-        "Content-type": "application/json"
-      }
     })
-  }
+      .then((response) => response.json())
+      .then((response) => setTodos(response));
+  };
 
   return (
     <tr key={todo.id}>
       <td>
-        <label>
-          <input
-            type="checkbox"
-            className="px-4 cursor-pointer size-4 text-cyan-500"
-            onChange={toggleTodo}
-          />
-          <span className={`${!isChecked ? "line-through" : ""}`}>
-            {todo.task}
-          </span>
-        </label>
+        <input
+          type="checkbox"
+          className="px-4 cursor-pointer size-4 text-cyan-500"
+          defaultChecked={todo.completed}
+        />
+        <span className={`${todo.completed ? "line-through" : ""}`}>
+          {todo.task}
+        </span>
       </td>
 
       <td>
@@ -111,6 +121,14 @@ export default function Todo({ todo, setTodos }) {
           </Modal>
         </div>
       </td>
+      {/* <div>
+        <button
+          onClick={handleDeleteCompletedTasks}
+          className="btn size={15} text-purple-900 bg-cyan-500 hover:bg-red-600 w-full"
+        >
+          Delete Completed Tasks
+        </button>
+      </div> */}
     </tr>
   );
 }

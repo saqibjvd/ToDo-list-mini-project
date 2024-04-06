@@ -18,4 +18,9 @@ export async function POST(request) {
   }
 }
 
+export async function DELETE(request, route) {
+  db.deleteCompletedTasks();
+  return Response.json(db.getTodos());
+}
+
 
