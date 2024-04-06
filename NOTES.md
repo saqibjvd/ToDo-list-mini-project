@@ -53,3 +53,8 @@ app.get('/jonathan/todo', (req, res) => {
 * for dynamic routes, it is still a folder name, but with square brackets, e.g. `app/api/todo/[id]/route.js`
   * [next.js documentation](https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes)
 
+# Modules
+* when you export a variable, then you can only assign to it in the original module
+* e.g. if you do `export let array = [1,2,3,4]` in `database.js` then you can only reassign it within `database.js`
+* be careful with `export` because it is only in ECMAScript 6
+
