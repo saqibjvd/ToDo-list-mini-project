@@ -45,15 +45,6 @@
       }
     }
 
-    // export const deleteCompletedTasks = (id) => {
-    //    todos = todos.filter(todo => {
-    //     if(todo.id === id) {
-    //       todo.completed !== todo.completed
-    //     }
-    //     return todos;
-    //    })
-    // }
-
     export const deleteCompletedTasks = () => {
       todos = todos.filter(todo => !todo.completed);
       return todos;

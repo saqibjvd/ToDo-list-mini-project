@@ -68,7 +68,8 @@ export default function Todo({ todo, setTodos }) {
         <input
           type="checkbox"
           className="px-4 cursor-pointer size-4 text-cyan-500"
-          defaultChecked={todo.completed}
+          onChange={toggleTodo}
+          checked={todo.completed}
         />
         <span className={`${todo.completed ? "line-through" : ""}`}>
           {todo.task}

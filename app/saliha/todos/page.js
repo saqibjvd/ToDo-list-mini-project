@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react';
-import AddTask from './addTodoForm';
+import AddTask from './addTodoAndDeleteCompletedTodo';
 import TodoList from './todoList';
 
 export default function Home() {
