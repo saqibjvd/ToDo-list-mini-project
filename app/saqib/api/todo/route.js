@@ -1,7 +1,7 @@
 const todoData = require("../database");
 
 export async function GET() {
-  return Response.json(todoData.todos);
+  return Response.json(await todoData.getAllTask());
 }
 
 export async function POST(req, res) {
