@@ -1,29 +1,25 @@
 let db = require("../../database");
 
-export function DELETE(request, route) {
+export async function DELETE(request, route) {
   const id = parseInt(route.params.id);
-  db.deleteTodo(id);
-  return Response.json(db.getTodos());
+  await db.deleteTodo(id);
+  return Response.json(await db.getTodos());
 }
 
 export async function PUT(request, route) {
+  console.log(await db.getTodos());
   try {
     const id = parseInt(route.params.id);
     const { task, completed } = await request.json();
-    db.updateTodo(id, task, completed);
-    return Response.json(db.getTodos(), {
-      status: 200,
-      statusText: "Todo item updated",
-    });
+
+    await db.updateTodo(id, task, completed);
+    return Response.json(await db.getTodos());
   } catch (err) {
     return Response.json(
       {
-        error: "Error updating todo item",
-        message: err.message,
+        error: "Error updating todo item"
       },
       { status: 500 }
     );
   }
 }
-
-

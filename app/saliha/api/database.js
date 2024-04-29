@@ -1,61 +1,69 @@
-  export let todos =
-    [
-      {
-        id: 1, 
-        task: "learn react", 
-        completed: false 
-      },
-      {
-        id: 2, 
-        task: "learn next.js", 
-        completed: true 
-      },
-      {
-        id: 3, 
-        task: "learn about react props", 
-        completed: true
-      },
-      {
-        id: 4, 
-        task: "todo mini app", 
-        completed: false
-      }
-    ];
+import pg from "pg";
 
-    export function getTodos() {
-      return todos;
-    }
+const { Pool } = pg;
 
-    export function AddTodo(newTask){
-      const id = todos.length ? todos[todos.length - 1].id + 1 : 1;
-      const newTodo = {
-        id: id,
-        // id: todos[todos.length - 1].id + 1,
-        task: newTask,
-        completed: false,
-      };
-      todos.push(newTodo);
-    }
+const pool_options = { connectionString: process.env.DATABASE_URL };
 
-    export function deleteTodo(id) {
-      try {
-        todos = todos.filter((todo) => todo.id !== id);
-      } catch (error) {
-        console.error("Error deleting todo:", error);
-      }
-    }
+const pool = new Pool(pool_options);
 
-    export const deleteCompletedTasks = () => {
-      todos = todos.filter(todo => !todo.completed);
-      return todos;
-    }
+export async function getTodos() {
+  try {
+    const result = await pool.query("SELECT * FROM todos");
 
-    export function updateTodo(id, task, completed){
-      const todoToUpdate = todos.find((todo) => todo.id === id); 
-      if (!todoToUpdate) {
-        return false
-      }
-      // Update the task of the found todo item
-      todoToUpdate.task = task;
-      todoToUpdate.completed = completed; 
-    }
+    return result.rows; // Return the fetched todos
+  } catch (error) {
+    console.error("Error fetching todos", error);
+    throw new Error("Failed to fetch todos");
+  }
+}
+
+export async function AddTodo(newTask) {
+  try {
+    const result = await pool.query(
+      "INSERT INTO todos(task, completed) VALUES($1, false) RETURNING id",
+      [newTask]
+    );
+    console.log("Insert successful");
+    return result;
+  } catch (error) {
+    console.error(`Failed to add task`, error);
+    throw error;
+  }
+}
+
+export async function updateTodo(id, task, completed) {
+  try {
+    const result = await pool.query(
+      `UPDATE todos SET task = $1, completed = $2 WHERE id = $3`,
+      [task, completed, id]
+    );
+    return result;
+  } catch (error) {
+    console.error("Error updating todo", error);
+    throw error;
+  }
+}
+
+export async function deleteTodo(id) {
+  try {
+    const result = await pool.query("DELETE FROM todos WHERE id=$1", [id]);
+    console.log(`Task ${id} deleted!`);
+    return result;
+  } catch (error) {
+    console.error("Error deleting todo", error);
+    throw error;
+  }
+}
+
+export async function deleteCompletedTasks() {
+  try {
+    const result = await pool.query("DELETE FROM todos WHERE completed=$1", [
+      true,
+    ]);
+    console.log("Completed tasks deleted");
+    return result;
+  } catch (error) {
+    console.error("Error deleting completed tasks", error);
+    throw error;
+  }
+}

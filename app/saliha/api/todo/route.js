@@ -1,15 +1,19 @@
-let db = require('../database');
+let db = require("../database");
 
 export async function GET() {
-  return Response.json(db.getTodos(), { status: 200 });
+  console.log(await db.getTodos());
+  return Response.json(await db.getTodos(), { status: 200 });
 }
 
 export async function POST(request) {
   try {
     const data = await request.json();
-    console.log(data)
-    db.AddTodo(data.task)
-    return Response.json(db.getTodos(), { status: 200, statusText: "New task added" });
+    console.log(data);
+    await db.AddTodo(data.task);
+    return Response.json(await db.getTodos(), {
+      status: 200,
+      statusText: "New task added",
+    });
   } catch (err) {
     return Response.json(err, {
       status: 500,
@@ -18,10 +22,8 @@ export async function POST(request) {
   }
 }
 
-export async function DELETE(request, route) {
+export async function DELETE(request) {
   const data = await request.json();
-  db.deleteCompletedTasks(data.completed);
-  return Response.json(db.getTodos());
+  await db.deleteCompletedTasks(data.completed);
+  return Response.json(await db.getTodos());
 }
-
-

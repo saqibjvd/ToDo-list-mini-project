@@ -27,14 +27,30 @@ export default function AddTask({ setTodos }) {
     router.refresh();
   }
 
-  const handleDeleteCompletedTasks = async (completed) => {
-    await fetch(`/saliha/api/todo`, {
-      method: "DELETE",
-    })
-    .then((response) => response.json())
-    .then((response) => setTodos(response))
+  const handleDeleteCompletedTasks = async () => {
+    try {
+      const response = await fetch(`/saliha/api/todo`, {
+        method: "DELETE",
+      });
+      if (!response.ok) {
+        throw new Error("Failed to delete completed tasks");
+      }
+      console.log("Completed tasks deleted successfully");
+      const Todos = await response.json();
+      setTodos(Todos);
+      router.refresh();
+    } catch (error) {
+      console.error("Error deleting completed tasks", error);
+    }
   };
 
+  // const handleDeleteCompletedTasks = async () => {
+  //   await fetch(`/saliha/api/todo`, {
+  //     method: "DELETE",
+  //   })
+  //   .then((response) => response.json())
+  //   .then((response) => setTodos(response))
+  // };
 
   return (
     <div>
@@ -63,11 +79,11 @@ export default function AddTask({ setTodos }) {
         </form>
       </Modal>
       <button
-          onClick={handleDeleteCompletedTasks}
-          className="btn size={15} text-purple-900 bg-cyan-500 hover:bg-red-600 w-full"
-        >
-          Delete Completed Tasks
-        </button>
+        onClick={handleDeleteCompletedTasks}
+        className="btn size={15} text-purple-900 bg-cyan-500 hover:bg-red-600 w-full"
+      >
+        Delete Completed Tasks
+      </button>
     </div>
   );
 }
