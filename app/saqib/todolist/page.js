@@ -44,7 +44,10 @@ export default function TodoApp() {
       method: "DELETE",
     })
       .then((response) => {
-        return response.json();
+        const x = response.json()
+      
+        console.log("new response", x);
+        return x
       })
       .then((response) => {
         setTodos(response);

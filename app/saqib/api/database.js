@@ -9,6 +9,7 @@
 //   { id: 8, task: "Complete Task 3", completed: false },
 // ];
 
+
 import pg from "pg"; // require for postgress
 
 const { Pool } = pg; // conect to db
@@ -20,14 +21,25 @@ const pool_options = {
 const pool = new Pool(pool_options);
 
 export async function getAllTask() {
+  // display all todos from databse
   const client = await pool.connect();
-
   const result = await client.query("Select * FROM todos");
   return result.rows;
 }
 
-export function DeleteSingleTask(id) {
-  todos = todos.filter((todo) => todo.id !== id);
+export async function addNewTask(newTask) {
+  const client = await pool.connect();
+  const result = await client.query(
+    "INSERT INTO todos (task, completed) VALUES ($1, false )",
+    [newTask]
+  );
+}
+
+export async function DeleteSingleTask(id) {
+  console.log("this is id 2", id);
+  const client = await pool.connect();
+  const result = await client.query(`DELETE FROM todos WHERE id = ${id}`);
+  console.log("this is my result", result);
 }
 
 export function DeleteCompletedTask() {
