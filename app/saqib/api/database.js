@@ -1,14 +1,4 @@
-// export let todos = [
-//   { id: 1, task: "Learn javaScript", completed: false },
-//   { id: 2, task: "Learn React", completed: false },
-//   { id: 3, task: "Learn Node", completed: false },
-//   { id: 4, task: "Complete Todo list project", completed: false },
-//   { id: 5, task: "Learn Next.js", completed: false },
-//   { id: 6, task: "Complete Task 1", completed: false },
-//   { id: 7, task: "Complete task 2", completed: false },
-//   { id: 8, task: "Complete Task 3", completed: false },
-// ];
-
+// ...........this is BACKEND where database is connected.........
 
 import pg from "pg"; // require for postgress
 
@@ -20,41 +10,53 @@ const pool_options = {
 
 const pool = new Pool(pool_options);
 
+// Display all todos from databse
 export async function getAllTask() {
-  // display all todos from databse
   const client = await pool.connect();
-  const result = await client.query("Select * FROM todos");
+  const result = await client.query(
+    "Select * FROM todos ORDER BY (case when completed then 1 else 0 end) ASC, id ASC"
+  );
+  client.release();
   return result.rows;
 }
 
+// Add new task to database
 export async function addNewTask(newTask) {
   const client = await pool.connect();
   const result = await client.query(
     "INSERT INTO todos (task, completed) VALUES ($1, false )",
     [newTask]
   );
+  client.release();
 }
 
-export async function DeleteSingleTask(id) {
-  console.log("this is id 2", id);
+// Mark completed /uncompleted
+export async function MarkAsCompleted(id) {
   const client = await pool.connect();
-  const result = await client.query(`DELETE FROM todos WHERE id = ${id}`);
-  console.log("this is my result", result);
+  const result = await client.query(
+    "UPDATE todos SET completed = NOT completed WHERE id = $1",
+    [id]
+  );
+  client.release();
 }
 
-export function DeleteCompletedTask() {
-  todos = todos.filter((todo) => !todo.completed);
+// Delete single todo task
+export async function DeleteSingleTask(id) {
+  const client = await pool.connect();
+  const result = await client.query("DELETE FROM todos WHERE id = $1", [id]);
+  client.release();
 }
 
-export function DeleteAllTask() {
-  todos = [];
+// Delete completed task
+export async function DeleteCompletedTask() {
+  const client = await pool.connect();
+  const result = await client.query("DELETE FROM todos WHERE completed");
+  client.release();
 }
 
-export function MarkAsCompleted(id) {
-  todos = todos.map((todo) => {
-    if (todo.id === id) {
-      todo.completed = !todo.completed;
-    }
-    return todo;
-  });
+// Delete all task
+export async function DeleteAllTask() {
+  const client = await pool.connect();
+  const result = await client.query("DELETE FROM todos");
+  client.release();
 }
