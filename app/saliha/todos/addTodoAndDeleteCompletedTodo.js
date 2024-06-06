@@ -5,7 +5,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import Modal from "../Modal";
 
-export default function AddTask({ setTodos }) {
+export default function AddTask({ todo, setTodos }) {
   const [newTask, setNewTask] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -29,28 +29,19 @@ export default function AddTask({ setTodos }) {
 
   const handleDeleteCompletedTasks = async () => {
     try {
-      const response = await fetch(`/saliha/api/todo`, {
+      const response = await fetch('/saliha/api/todo', {
         method: "DELETE",
       });
       if (!response.ok) {
         throw new Error("Failed to delete completed tasks");
       }
-      console.log("Completed tasks deleted successfully");
-      const Todos = await response.json();
-      setTodos(Todos);
+      const todos = await response.json();
+      setTodos(todos);
       router.refresh();
     } catch (error) {
       console.error("Error deleting completed tasks", error);
     }
   };
-
-  // const handleDeleteCompletedTasks = async () => {
-  //   await fetch(`/saliha/api/todo`, {
-  //     method: "DELETE",
-  //   })
-  //   .then((response) => response.json())
-  //   .then((response) => setTodos(response))
-  // };
 
   return (
     <div>
