@@ -12,8 +12,8 @@ export default function Home() {
       .then((response) => {
         return response.json();
       })
-      .then((response) => {
-        setTodos(response);
+      .then((data) => {
+        setTodos(data);
       });
   }, []);
 
