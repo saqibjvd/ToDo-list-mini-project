@@ -17,6 +17,9 @@ steps for mark as completed....
 7. when we use fetch we get the first promise we get is HTTP response on HTTP response we get json() response. then that return 2nd promise which is javascript response. 
 8. always wirte dynamic route in [] and their router such as delete, PUT request in here.
 9. implement on front end DEL route.
+10. re-cehck my code and remeber where to pass function and wher to call that function, try learning more about front end, back local and with database.
+11. always use debuging like console.log and check errors, google errors
+12. saqib dont rush. and  try not to guess
 
 
 sql:

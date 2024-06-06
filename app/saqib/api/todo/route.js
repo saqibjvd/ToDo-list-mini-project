@@ -19,9 +19,9 @@ export async function POST(req, res) {
 export async function DELETE(req) {
   const data = await req.json();
   if (data.completed) {
-   await database.DeleteCompletedTask();
+    await database.DeleteCompletedTask();
   } else {
-   await database.DeleteAllTask();
+    await database.DeleteAllTask();
   }
   return Response.json(await database.getAllTask());
 }
