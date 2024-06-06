@@ -57,10 +57,8 @@ export async function deleteTodo(id) {
 
 export async function deleteCompletedTasks() {
   try {
-    const result = await pool.query("DELETE FROM todos WHERE completed=$1", [
-      true
-    ]);
-    console.log("Completed tasks deleted");
+    const result = await pool.query("DELETE FROM todos WHERE completed=true");
+    console.log("Completed tasks deleted:", result.rowCount);
     return result;
   } catch (error) {
     console.error("Error deleting completed tasks", error);

@@ -2,7 +2,8 @@ let db = require("../database");
 
 export async function GET() {
   console.log(await db.getTodos());
-  return Response.json(await db.getTodos(), { status: 200 });
+  return Response.json(await db.getTodos(), 
+  { status: 200 });
 }
 
 export async function POST(request) {
@@ -23,7 +24,21 @@ export async function POST(request) {
 }
 
 export async function DELETE(request) {
-  const data = await request.json();
-  await db.deleteCompletedTasks(data.completed);
-  return Response.json(await db.getTodos());
+  try {
+    console.log('starting deleteCompletedTask')
+  // const data = await request.json();
+  // await db.deleteCompletedTasks(data.completed);
+  // return Response.json(await db.getTodos());
+
+  await db.deleteCompletedTasks();
+  const data = await db.getTodos();
+  return Response.status(200).json(data);
+  }catch (err) {
+    return Response.json(
+      {
+        error: "Error deleting completed todo"
+      },
+      { status: 500 }
+    );
+  }
 }
