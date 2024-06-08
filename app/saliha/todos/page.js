@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import AddTask from './addTodoAndDeleteCompletedTodo';
 import TodoList from './todoList';
+import pageModule from './pageModule.css'
 
 export default function Home() {
   const [todos, setTodos]= useState([]);
@@ -16,7 +17,6 @@ export default function Home() {
         setTodos(data);
       });
   }, []);
-
 
 
   return (

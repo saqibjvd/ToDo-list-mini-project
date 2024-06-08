@@ -13,34 +13,8 @@ await is added before each function call to connect to the database server.  (re
 await is added before each callback function to ensure that they are executed synchronously and avoid the need for double clicking on buttons or any other actions.(await db.AddTodo(data.task);)
 
 supabase for saving data 
-1. Create an acount
-2. Copy url link and paste it instead of the postgresql://tmp@localhost:5432/todos
+1. Creating an account
+2. Copying url link and paste it instead of the postgresql://tmp@localhost:5432/todos
+3. Creating new table and inserting new data
+4. To view the table and its columns click the database, click the three dots and then view table
 
-
-
-
-
-
-
-vercel_based_environment
-# POSTGRES_URL="postgres://default:I2K5tifEjOdU@ep-shrill-morning-a4lv516a-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require"
-# POSTGRES_PRISMA_URL="postgres://default:I2K5tifEjOdU@ep-shrill-morning-a4lv516a-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require&pgbouncer=true&connect_timeout=15"
-# POSTGRES_URL_NO_SSL="postgres://default:I2K5tifEjOdU@ep-shrill-morning-a4lv516a-pooler.us-east-1.aws.neon.tech:5432/verceldb"
-# POSTGRES_URL_NON_POOLING="postgres://default:I2K5tifEjOdU@ep-shrill-morning-a4lv516a.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require"
-# POSTGRES_USER="default"
-# POSTGRES_HOST="ep-shrill-morning-a4lv516a-pooler.us-east-1.aws.neon.tech"
-# POSTGRES_PASSWORD="I2K5tifEjOdU"
-# POSTGRES_DATABASE="verceldb"
-# POSTGRES_PORT = 5432
-#   psql "postgres://default:I2K5tifEjOdU@ep-shrill-morning-a4lv516a.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require"
-
-
-  # connectionString: process.env.POSTGRES_URL ,
-  # POSTGRES_URL: process.env.POSTGRES_URL,
-  # POSTGRES_PRISMA_URL: process.env.POSTGRES_PRISMA_URL,
-  # POSTGRES_URL_NO_SSL: process.env.POSTGRES_URL_NO_SSL,
-  # POSTGRES_URL_NON_POOLING: process.env.POSTGRES_URL_NON_POOLING,
-  # POSTGRES_USER: process.env.POSTGRES_USER,
-  # POSTGRES_HOST: process.env.POSTGRES_HOST,
-  # POSTGRES_PASSWORD: process.env.POSTGRES_PASSWORD,
-  # POSTGRES_DATABASE: process.env.POSTGRES_DATABASE,
