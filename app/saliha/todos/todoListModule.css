@@ -1,0 +1,9 @@
+.th{
+  color: red;
+  font-weight: bolder;
+  font-size: medium;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

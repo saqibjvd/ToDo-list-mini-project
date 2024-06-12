@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import AddTask from './addTodoAndDeleteCompletedTodo';
 import TodoList from './todoList';
+import styles from './page.css'
 
 export default function Home() {
   const [todos, setTodos]= useState([]);
@@ -18,10 +19,9 @@ export default function Home() {
   }, []);
 
 
-
   return (
     <main className="max-w-4xl mx-auto mt-20 mb-15">
-    <div>
+    <div className='styles.shape'>
       <h1 className="underline text-4xl text-center font-b mb-6">Todos App</h1>
       <AddTask setTodos={setTodos}/>
     </div>

@@ -122,14 +122,6 @@ export default function Todo({ todo, setTodos }) {
           </Modal>
         </div>
       </td>
-      {/* <div>
-        <button
-          onClick={handleDeleteCompletedTasks}
-          className="btn size={15} text-purple-900 bg-cyan-500 hover:bg-red-600 w-full"
-        >
-          Delete Completed Tasks
-        </button>
-      </div> */}
     </tr>
   );
 }

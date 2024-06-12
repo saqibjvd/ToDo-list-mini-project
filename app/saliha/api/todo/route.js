@@ -26,13 +26,9 @@ export async function POST(request) {
 export async function DELETE(request) {
   try {
     console.log('starting deleteCompletedTask')
-  // const data = await request.json();
-  // await db.deleteCompletedTasks(data.completed);
-  // return Response.json(await db.getTodos());
-
-  await db.deleteCompletedTasks();
-  const data = await db.getTodos();
-  return Response.status(200).json(data);
+  const data = await request.json();
+  await db.deleteCompletedTasks(data.completed);
+  return Response.json(await db.getTodos());
   }catch (err) {
     return Response.json(
       {
